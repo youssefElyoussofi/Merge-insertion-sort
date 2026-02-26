@@ -28,8 +28,16 @@ void MergeInsert::parsing(int ac,char **argv)
         if (i + 1 < nums.size())
         {
             pair<int,int> p;
-            p.first = nums[i];
-            p.second = nums[i + 1];
+            if (nums[i] > nums[i + 1])
+            {
+                p.first = nums[i];
+                p.second = nums[i + 1];
+            }
+            else
+            {
+                p.first = nums[i + 1];
+                p.second = nums[i];
+            }
             this->pairs.push_back(p);
         }
         else
@@ -39,5 +47,17 @@ void MergeInsert::parsing(int ac,char **argv)
         }
         i += 2;
     }
+ 
 }
 
+
+void MergeInsert::display()
+{
+    for (list<pair<int,int>>::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
+    {
+        cout << '[' << it->first << ',' << it->second << "]\t";
+    }
+    if (this->isOdd)
+        cout  << this->single;
+    cout << endl;
+}

@@ -11,7 +11,7 @@ class MergeInsert
         bool isOdd = false;
         int single;
     public:
-        MergeInsert();
         void parsing(int ac,char **av);
+        void display();
         
 };

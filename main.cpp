@@ -13,4 +13,5 @@ int main(int ac,char **av)
     {
         cerr << e.what() << '\n';
     }
+    merge.display();
 }
