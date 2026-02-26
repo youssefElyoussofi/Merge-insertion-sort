@@ -23,9 +23,21 @@ void MergeInsert::parsing(int ac,char **argv)
             throw logic_error("invalid input do not enter Duplicate Number");
         nums.push_back(nb);
     }
-    for (size_t i = 0; i < nums.size(); i++)
+    for (size_t i = 0; i < nums.size();)
     {
-        cout << nums[i] << (i < nums.size() - 1 ? ',':'\n');
+        if (i + 1 < nums.size())
+        {
+            pair<int,int> p;
+            p.first = nums[i];
+            p.second = nums[i + 1];
+            this->pairs.push_back(p);
+        }
+        else
+        {
+            this->isOdd = true;
+            this->single = nums[i];
+        }
+        i += 2;
     }
-    
 }
+
