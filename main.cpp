@@ -8,6 +8,7 @@ int main(int ac,char **av)
     try
     {
         merge.parsing(ac,av);
+        merge.algo();
     }
     catch(const exception& e)
     {

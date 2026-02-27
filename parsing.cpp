@@ -53,7 +53,7 @@ void MergeInsert::parsing(int ac,char **argv)
 
 void MergeInsert::display()
 {
-    for (list<pair<int,int>>::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
+    for (list<pair<int,int> >::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
     {
         cout << '[' << it->first << ',' << it->second << "]\t";
     }
