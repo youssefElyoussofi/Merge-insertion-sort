@@ -25,3 +25,6 @@ class MergeInsert
 
 void merge_sort(list<pair<int,int> >& pairs);
 void merge_sort(vector<pair<int,int> >& pairs);
+
+void insertion(vector<pair<int,int> >& pairs,bool isOdd,int num);
+void insertion(list<pair<int,int> >& pairs,bool isOdd,int num);

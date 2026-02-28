@@ -58,7 +58,10 @@ void MergeInsert::algo(Type type)
     // 4 - Insert at the start element that was paired with the first and smallest element of our sequence.
     // 5 - Insert the remaining ⌈ n / 2 ⌉ − 1 elements, with a specially chosen insertion ordering. 
     // Use binary search in subsequences to determine the position at which each element should be inserted.
-    
+    // if (type == LIST)
+    //     insertion(this->pairsLst,this->isOdd,this->single);
+    // else
+    //     insertion(this->pairsVec,this->isOdd,this->single);
 }
 
 void MergeInsert::display(Type type)
@@ -66,14 +69,14 @@ void MergeInsert::display(Type type)
     cout << "sorted numbers : \n";
     if (type == VECTOR)
     {
-        for (vector<pair<int, int>>::iterator it = this->pairsVec.begin(); it != this->pairsVec.end(); it++)
+        for (vector<pair<int, int> >::iterator it = this->pairsVec.begin(); it != this->pairsVec.end(); it++)
         {
             cout << it->first << ' ';
         }
     }
     else
     {
-        for (list<pair<int, int>>::iterator it = this->pairsLst.begin(); it != this->pairsLst.end(); it++)
+        for (list<pair<int, int> >::iterator it = this->pairsLst.begin(); it != this->pairsLst.end(); it++)
         {
             cout << it->first << ' ';
         }

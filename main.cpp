@@ -32,10 +32,10 @@ int main(int ac,char **av)
         parsing(ac,av,nums);
         MergeInsert merge(nums);
         gettimeofday(&tm1,NULL);
-        merge.algo();
+        merge.algo(VECTOR);
         gettimeofday(&tm2,NULL);
         double time = ((tm2.tv_sec - tm1.tv_sec) * 1000000.0) + (tm2.tv_usec - tm1.tv_usec);
-        merge.display();
+        merge.display(VECTOR);
         cout << "time : " << time << " us\n";
     }
     catch(const exception& e)

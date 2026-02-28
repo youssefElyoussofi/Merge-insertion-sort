@@ -18,10 +18,10 @@ bool compare(const pair<int, int> &elem, const pair<int, int> &tmp_elem)
 
 void insertion(list<pair<int,int> >& pairs,bool isOdd,int num)
 {
-    list<pair<int, int>> losers = pairs;
+    list<pair<int, int> > losers = pairs;
     vector<int> jacob;
     jacobstalNums(jacob);
-    list<pair<int, int>>::iterator oldIterat, currIterat, target, insert_pos, index;
+    list<pair<int, int> >::iterator oldIterat, currIterat, target, insert_pos, index;
     size_t jacobIndex = 2, pos, total = 0;
     pair<int, int> tmp;
     for (size_t total = 0; total < losers.size();)
@@ -76,11 +76,12 @@ void insertion(vector<pair<int,int> >& pairs,bool isOdd,int num)
     vector<int> jacob;
     jacobstalNums(jacob);
     size_t jIndex = 2, currIndex = 0, oldIndex = 0;
-    while (oldIndex != losers.size() - 1)
+    vector<pair<int, int> >::iterator target, insert_pos;
+    if (oldIndex != losers.size() - 1)
     {
         oldIndex = currIndex;
-        currIndex = jacob[jIndex] - 1 > losers.size() ? losers.size() - 1 : jacob[jIndex];
-        if (oldIndex == 1)
+        currIndex = (jacob[jIndex] - 1 > losers.size() )? (losers.size() - 1) : jacob[jIndex];
+        if (oldIndex == 0)
         {
             tmp.first = losers[0].second;
             tmp.second = losers[0].first;
@@ -88,11 +89,14 @@ void insertion(vector<pair<int,int> >& pairs,bool isOdd,int num)
         }
         else
         {
-            for (; currIndex != oldIndex; --currIndex)
+            for (; currIndex > oldIndex; --currIndex)
             {
-                
+                tmp.first = losers[currIndex].second;
+                tmp.second = losers[currIndex].first;
+                target = find(pairs.begin(),pairs.end(),losers[currIndex]);
+                insert_pos = lower_bound(pairs.begin(),target,tmp,compare);
+                pairs.insert(insert_pos,tmp);
             }
         }
     }
-    
 }
