@@ -1,17 +1,18 @@
 #include "MergeInsert.hpp"
 
-MergeInsert::MergeInsert(vector<int>& nums):nums(nums),isOdd(false)
+MergeInsert::MergeInsert(vector<int> &nums) : nums(nums), isOdd(false)
 {
-
 }
 
-void MergeInsert::init_pairs()
+void MergeInsert::init_pairs(Type type)
 {
+    if (type == VECTOR)
+        pairsVec.reserve((nums.size() / 2) + 1);
     for (size_t i = 0; i < nums.size();)
     {
         if (i + 1 < nums.size())
         {
-            pair<int,int> p;
+            pair<int, int> p;
             if (nums[i] > nums[i + 1])
             {
                 p.first = nums[i];
@@ -22,7 +23,10 @@ void MergeInsert::init_pairs()
                 p.first = nums[i + 1];
                 p.second = nums[i];
             }
-            pairs.push_back(p);
+            if (type == VECTOR)
+                pairsVec.push_back(p);
+            else
+                pairsLst.push_back(p);
         }
         else
         {
@@ -33,116 +37,46 @@ void MergeInsert::init_pairs()
     }
 }
 
-static vector<int> jacobstalNums()
+void MergeInsert::algo(Type type)
 {
-    vector<int> jacobstal;
+    // 1 Group the elements into ⌊ n / 2 ⌋ pairs of elements
+    // leaving one element unpaired if there is an odd number of elements.
 
-    jacobstal.reserve(20);
-    jacobstal[0] = 0;
-    jacobstal[1] = 1;
-    for (size_t i = 2; i < 20; i++)
-    {
-        jacobstal[i] = jacobstal[i - 1] + (jacobstal[i - 2] * 2);
-    }
-    return jacobstal;
-}
+    // 2 -Perform ⌊ n / 2 ⌋ {\displaystyle \lfloor n/2\rfloor } comparisons,
+    // one per pair, to determine the larger of the two elements in each pair.
 
-static void merge_sort(list<pair<int,int> >& pairs)
-{
-    if(pairs.size() <= 1)
-        return;
+    // (this function include both steps 1 - 2)
+    this->init_pairs(type);
+
+    // 3 - Recursively sort the ⌊ n / 2 ⌋ by larger elements from each pair,
+    // in ascending order, using the merge-insertion sort.
+    if (type == LIST)
+        merge_sort(this->pairsLst);
+    else
+        merge_sort(this->pairsVec);
     
-    list<pair<int,int> >::iterator mid = pairs.begin();
-    advance(mid,pairs.size()/2);
-    list<pair<int,int> > left , right;
-    left.splice(left.begin(),pairs,pairs.begin(),mid);
-    right.splice(right.begin(),pairs,pairs.begin(),pairs.end());
-
-    merge_sort(left);
-    merge_sort(right);
-
-    list<pair<int,int> >::iterator it1 = left.begin();
-    list<pair<int,int> >::iterator it2 = right.begin();
-
-    while (it1 != left.end() && it2 != right.end())
-    {
-        if (it1->first < it2->first)
-        {
-            pairs.splice(pairs.end(),left,it1++);
-        }
-        else
-        {
-            pairs.splice(pairs.end(),right,it2++);
-        }
-    }
-    pairs.splice(pairs.end(),left);
-    pairs.splice(pairs.end(),right);
-}
-
-bool compare(pair<int,int>& elem,const pair<int,int>& tmp_elem)
-{
-    return elem.first < tmp_elem.first;
-}
-
-void MergeInsert::algo()
-{
-    this->init_pairs();
-    merge_sort(this->pairs);
-    list<pair<int,int> > losers = this->pairs;
-    vector<int> jacob = jacobstalNums();
-    list<pair<int,int> >::iterator oldIterat , currIterat , target, insert_pos,index;
-    size_t jacobIndex = 2,pos,total = 0;
-    pair<int,int> tmp;
-    for (size_t total = 0;total < losers.size();)
-    {
-        if(jacobIndex == 2)
-        {
-            currIterat = losers.begin();
-            tmp.first = currIterat->second;
-            tmp.second = currIterat->first;
-            pairs.push_front(tmp);
-            total++;
-        }
-        else
-        {
-            pos = jacob[jacobIndex] - 1;
-            oldIterat = currIterat;
-            if (pos < losers.size())
-            {
-                currIterat = losers.begin();
-                advance(currIterat,pos);
-            }
-            else
-                currIterat = --losers.end();
-            index = currIterat;
-            while (index != oldIterat)
-            {
-                tmp.first = index->second;
-                tmp.second = index->first;
-                target = find(pairs.begin(),pairs.end(),*index);
-                insert_pos = lower_bound(pairs.begin(),target,tmp,compare);
-                pairs.insert(insert_pos,tmp);
-                --index;
-                total++;
-            }
-        }
-        jacobIndex++;
-    }
-    if (this->isOdd)
-    {
-        tmp.first = this->single;
-        insert_pos = lower_bound(pairs.begin(),pairs.end(),tmp,compare);
-        pairs.insert(insert_pos,tmp);
-    }
+    // 4 - Insert at the start element that was paired with the first and smallest element of our sequence.
+    // 5 - Insert the remaining ⌈ n / 2 ⌉ − 1 elements, with a specially chosen insertion ordering. 
+    // Use binary search in subsequences to determine the position at which each element should be inserted.
     
 }
 
-void MergeInsert::display()
+void MergeInsert::display(Type type)
 {
     cout << "sorted numbers : \n";
-    for (list<pair<int,int> >::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
+    if (type == VECTOR)
     {
-        cout << it->first << ' ';
+        for (vector<pair<int, int>>::iterator it = this->pairsVec.begin(); it != this->pairsVec.end(); it++)
+        {
+            cout << it->first << ' ';
+        }
+    }
+    else
+    {
+        for (list<pair<int, int>>::iterator it = this->pairsLst.begin(); it != this->pairsLst.end(); it++)
+        {
+            cout << it->first << ' ';
+        }
     }
     cout << endl;
 }
