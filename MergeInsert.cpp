@@ -1,9 +1,36 @@
 #include "MergeInsert.hpp"
-#include <vector>
 
-MergeInsert::MergeInsert():isOdd(false)
+MergeInsert::MergeInsert(vector<int>& nums):nums(nums),isOdd(false)
 {
 
+}
+
+void MergeInsert::init_pairs()
+{
+    for (size_t i = 0; i < nums.size();)
+    {
+        if (i + 1 < nums.size())
+        {
+            pair<int,int> p;
+            if (nums[i] > nums[i + 1])
+            {
+                p.first = nums[i];
+                p.second = nums[i + 1];
+            }
+            else
+            {
+                p.first = nums[i + 1];
+                p.second = nums[i];
+            }
+            pairs.push_back(p);
+        }
+        else
+        {
+            isOdd = true;
+            single = nums[i];
+        }
+        i += 2;
+    }
 }
 
 static vector<int> jacobstalNums()
@@ -59,16 +86,15 @@ bool compare(pair<int,int>& elem,const pair<int,int>& tmp_elem)
 
 void MergeInsert::algo()
 {
+    this->init_pairs();
     merge_sort(this->pairs);
-
     list<pair<int,int> > losers = this->pairs;
     vector<int> jacob = jacobstalNums();
-    list<pair<int,int> >::iterator oldIterat , currIterat , target, insert_pos;
+    list<pair<int,int> >::iterator oldIterat , currIterat , target, insert_pos,index;
     size_t jacobIndex = 2,pos,total = 0;
-
+    pair<int,int> tmp;
     for (size_t total = 0;total < losers.size();)
     {
-        pair<int,int> tmp;
         if(jacobIndex == 2)
         {
             currIterat = losers.begin();
@@ -79,8 +105,8 @@ void MergeInsert::algo()
         }
         else
         {
-            oldIterat = currIterat;
             pos = jacob[jacobIndex] - 1;
+            oldIterat = currIterat;
             if (pos < losers.size())
             {
                 currIterat = losers.begin();
@@ -88,18 +114,34 @@ void MergeInsert::algo()
             }
             else
                 currIterat = --losers.end();
-            while (currIterat != oldIterat)
+            index = currIterat;
+            while (index != oldIterat)
             {
-                tmp.first = currIterat->second;
-                tmp.second = currIterat->first;
-                target = find(pairs.begin(),pairs.end(),*currIterat);
+                tmp.first = index->second;
+                tmp.second = index->first;
+                target = find(pairs.begin(),pairs.end(),*index);
                 insert_pos = lower_bound(pairs.begin(),target,tmp,compare);
                 pairs.insert(insert_pos,tmp);
-                --currIterat;
+                --index;
                 total++;
             }
         }
         jacobIndex++;
     }
+    if (this->isOdd)
+    {
+        tmp.first = this->single;
+        insert_pos = lower_bound(pairs.begin(),pairs.end(),tmp,compare);
+        pairs.insert(insert_pos,tmp);
+    }
     
+}
+
+void MergeInsert::display()
+{
+    for (list<pair<int,int> >::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
+    {
+        cout << it->first << ' ';
+    }
+    cout << endl;
 }

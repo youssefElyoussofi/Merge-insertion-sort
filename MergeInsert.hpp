@@ -1,19 +1,21 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
 class MergeInsert
 {
     private:
-        list<pair<int,int> > pairs;
+        vector<int> nums;
+        list<pair<int, int> > pairs;
         bool isOdd;
         int single;
+
     public:
-        MergeInsert();
-        void parsing(int ac,char **av);
+        MergeInsert(vector<int> &nums);
+        void init_pairs();
         void algo();
         void display();
-        
 };
