@@ -139,6 +139,7 @@ void MergeInsert::algo()
 
 void MergeInsert::display()
 {
+    cout << "sorted numbers : \n";
     for (list<pair<int,int> >::iterator it = this->pairs.begin(); it != this->pairs.end(); it++)
     {
         cout << it->first << ' ';

@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <cstring>
 #include <climits>
+#include <sys/time.h>
 
 void parsing(int ac,char **argv,vector<int>& nums)
 {
@@ -25,12 +26,17 @@ void parsing(int ac,char **argv,vector<int>& nums)
 int main(int ac,char **av)
 {
     vector<int> nums;
+    timeval tm1, tm2;
     try
     {
         parsing(ac,av,nums);
         MergeInsert merge(nums);
+        gettimeofday(&tm1,NULL);
         merge.algo();
+        gettimeofday(&tm2,NULL);
+        double time = ((tm2.tv_sec - tm1.tv_sec) * 1000000.0) + (tm2.tv_usec - tm1.tv_usec);
         merge.display();
+        cout << "time : " << time << " us\n";
     }
     catch(const exception& e)
     {
