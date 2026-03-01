@@ -1,0 +1,6 @@
+9215 us  9136 us  8513 us  8599 us  9068 us  9117 us  9344 us  8972 us  8816 us  9130 us  8943 us  10809 us  9305 us  9240 us  9095 us  9066 us  
+
+
+9542 us  9586 us  9551 us  9797 us  9373 us  9485 us  9512 us  9899 us  9429 us  9430 us  9655 us  9478 us  9130 us  
+9960 us  10023 us  10165 us  10000 us  10114 us  11274 us  10005 us  10443 us  10442 us  10127 us  10463 us  10047 us  10181 us  
+9507 us  9191 us  9410 us  9281 us  9281 us  9375 us  9509 us  9118 us  9431 us  9403 us  9240 us  9447 us  9608 us  

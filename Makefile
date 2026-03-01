@@ -1,5 +1,5 @@
 CXX=c++
-CXXFLAGS= -std=c++98 -g
+CXXFLAGS= -std=c++98 
 SRC= MergeInsert.cpp main.cpp algo_part_1_.cpp algo_part_2_.cpp
 OBJ=$(SRC:.cpp=.o)
 NAME=algoExecution

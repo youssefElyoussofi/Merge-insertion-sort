@@ -15,12 +15,13 @@ class MergeInsert
         vector<pair<int, int> > pairsVec;
         bool isOdd;
         int single;
+        double time;
 
     public:
         MergeInsert(vector<int> &nums);
         void init_pairs(Type type);
-        void algo(Type type);
-        void display(Type type);
+        double algo(Type type);
+        void display();
 };
 
 void merge_sort(list<pair<int,int> >& pairs);
